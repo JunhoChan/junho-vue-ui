@@ -1,0 +1,141 @@
+.jc-player-wrap, .jc-player-video {
+  box-sizing: inherit;
+  position: relative;
+  width: 600px;
+  overflow: hidden;
+}
+video::-webkit-media-controls{
+  display: none;
+}
+
+.jc-player-toolbar{
+  width: 100%;
+  height: 40px;
+  background: rgba(34,34,34,.8);
+  position: absolute;
+  bottom: -40px;
+  line-height: 40px;
+  user-select: none;
+  transition: bottom .5s ease-in-out;
+  z-index: 1002;
+  border-top: 1px solid #ADADAD;
+}
+
+.jc-player-wrap > .is-hover {
+  bottom: 0px;
+}
+
+.jc-player-wrap > .on-mask {
+  background-image: url('~@/icons/play-icon.svg');
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-size: 15%;
+  background-color: rgba(0, 0, 0, .2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+.jc-player-wrap > .jc-loading-cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, .2);
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1000;
+}
+
+.jc-loading-cover > .cover-image {
+ width: 80px;
+ height: 80px; 
+}
+
+.jc-loading-cover > .loading-text {
+  font-size: 14px;
+  color: #fff;
+  margin-top: 10px;
+  letter-spacing: 2px;
+  animation: textLoading 2s infinite;
+}
+
+@keyframes textLoading {
+  0% {
+    transform: skew(0deg, 0deg);
+  }
+  25% {
+    transform: skew(5deg, 10deg);
+  }
+  50% {
+    transform: skew(3deg, 6deg);
+  }
+  75% {
+    transform: skew(2deg, 2deg);
+  }
+  100% {
+    transform: skew(0);
+  }
+}
+
+
+.jc-icon {
+  width: 25px;
+  height: 22px;
+  line-height: 100%;
+  margin-left: 20px;
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.jc-sound-progress {
+  float: right;
+  display: flex;
+  position: relative;
+  align-items: center;
+  background-color: #fff;
+  margin: 18px 10px;
+  width: 100px;
+  height: 3px;
+  line-height: 40px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.jc-sound-bg {
+  position: absolute;
+  left: 0;
+  height: 2px;
+  background-color: #409eff;
+}
+
+.jc-sound-btn {
+  position: absolute;
+  background-color: aqua;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.jc-player-toolbar > .right-button__wrapper {
+  display: flex;
+  float: right;
+  margin-right:10px;
+}
+
+.right-button__wrapper >  .jc-text-button {
+  color: #fff;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  height: 40px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  font-size: 16px;
+}
