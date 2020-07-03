@@ -26,7 +26,7 @@ module.exports = {
     css: {
         sourceMap: true,
         extract: {
-            filename: 'style/[name].css'
+            filename: 'themes/[name].css'
         }
     },
     configureWebpack: {
@@ -56,9 +56,9 @@ module.exports = {
                 return options
             })
         config.optimization.delete('splitChunks')
-        config.plugins.delete('copy')
-        config.plugins.delete('html')
-        config.plugins.delete('preload')
+        // config.plugins.delete('copy')
+        config.plugins.delete('html') // 删除模板插件
+        config.plugins.delete('preload') // 删除预加载插件
         config.plugins.delete('prefetch')
         config.plugins.delete('hmr')
         config.entryPoints.delete('app')
@@ -70,6 +70,12 @@ module.exports = {
                 option.fallback.options.name = 'static/fonts/[name].[hash:8].[ext]'
                 return option
             })
+        // 基础样式
+        config.plugin('copy').tap(args => {
+            args[0][0].from = resolve('../src/styles/base.css')
+            args[0][0].to = "themes"
+            return args;
+        })
     },
     outputDir: 'lib',
     productionSourceMap: false,

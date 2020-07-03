@@ -1,25 +1,29 @@
 <template>
-  <el-submenu :index="subData.label">
-    <template slot="title">
-      <i class="el-icon-location"></i>
-      <span slot="title">{{subData[navProp['label']]}}</span>
-    </template>
-    <template v-for="(sub, index) in subData.children">
-        <jc-sub-menu
-          v-if="sub[navProp['children']] && sub[navProp['children']].length > 0"
-          :key="sub.label + index"
-          :sub-data="sub"
-          :nav-prop="navProp"
-        />
-        <el-menu-item
+  <div :class="['jc-subMenu-box', className]">
+    <template v-for="(subData, index) in navData">
+       <el-submenu
+         v-if="subData[navProp['children']] && subData[navProp['children']].length"
+         :key="subData[navProp['label']] + index"
+         :index="subData[navProp['label']] + index">
+          <template slot="title">
+            <i :class="subData[navProp['icon']]"></i>
+            <span slot="title" v-if="!$parent.collapse">{{subData[navProp['label']]}}</span>
+          </template>
+          <jc-sub-menu
+            :nav-data="subData[navProp['children']]"
+            :nav-prop="navProp"
+            @click-menu="hancleMenuItemClick"/>
+      </el-submenu>
+      <el-menu-item
           v-else
-          :index="sub.label"
-          :key="sub.label + index">
-          <i class="el-icon-location"></i>
-          <span slot="title">{{sub[navProp['label']]}}</span>
+          :index="subData[navProp['label']] + index"
+          :key="subData[navProp['label']] + index"
+          @click.native="hancleMenuItemClick(subData)">
+          <i :class="subData[navProp['icon']]"></i>
+          <span slot="title">{{subData[navProp['label']]}}</span>
         </el-menu-item>
-      </template>
-  </el-submenu>
+    </template>
+  </div>
 </template>
 
 <script>
@@ -27,8 +31,9 @@ export default {
   name: 'JcSubMenu',
   
   props: {
-    subData: {
-      type: Object,
+    className: String,
+    navData: {
+      type: Array,
       require: true
     },
     navProp: {
@@ -37,10 +42,20 @@ export default {
        return {
         children: 'children',
         label: 'label',
-        path: 'path'
+        path: 'path',
+        icon: 'icon'
       };
      } 
    },
+  },
+  methods: {
+    /**
+     * @description 菜单被点击
+     * @param {Object} routeData
+     */
+    hancleMenuItemClick(routeData) {
+      this.$emit('click-menu', routeData)
+    }
   }
 }
 </script>

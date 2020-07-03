@@ -2,27 +2,16 @@
 <el-menu
   :class="[{'jc-vervicle-menu': mode === 'vertical'}, 'jc-menu-wrap']" 
   :mode="mode"
-  text-color="#ffffff"
+  :text-color="fontColor"
   :collapse=" mode === 'vertical' ? collapse : false"
-  :background-color="backgroundColor"
-  menu-trigger="click"
+  :background-color="subBackgroundColor"
   >
-  <template v-for="(subData, index) in navData">
     <jc-sub-menu
-      class="jc-menu-theme"
-      v-if="subData['children'] && subData['children'].length > 0"
-      :key="subData.label + index"
-      :sub-data="subData"
+      className="jc-first-subMenu"
+      :nav-data="navData"
       :nav-prop="navProp"
+      @click-menu="hancleMenuItemClick"
     />
-    <el-menu-item
-      v-else
-      :key="subData.label + index"
-      class="jc-menu-theme">
-      <i class="el-icon-location"></i>  
-      <span slot="title">{{subData[navProp['label']]}}</span>
-    </el-menu-item>
-  </template>
 </el-menu>
 </template>
 
@@ -37,16 +26,17 @@ export default {
  },
 
  props:  {
-   navData: {
+   navData: { // 导航数据
      type: Array,
      default: () => []
    },
-   navProp: {
+   navProp: { // 定义导航参数的配置值
      type: Object,
      default() {
        return {
         children: 'children',
         label: 'label',
+        icon: 'icon',
         path: 'path'
       };
      } 
@@ -56,59 +46,97 @@ export default {
      default: 'vertical' // horizontal / vertical
    },
    collapse: Boolean,
-   backgroundColor: {
+   navBackgroundColor: {
+     type: String,
+     default: '#001529'
+   },
+   subBackgroundColor: {
      type: String,
      default: '#000C17'
    },
-   textColor: {
+   fontColor: {
      type: String,
-     default: '#F2F3F4'
+     default: '#fff'
+   },
+   activeBackgroundColor: {
+     type: String,
+     default: '#2D8CF0'
    }
+  },
+
+  mounted() {
+    this.createNavStyle()
+  },
+
+  methods: {
+    /**
+     * @description 菜单被点击
+     * @param {Object} routeData
+     */
+    hancleMenuItemClick(routeData) {
+      this.$emit('click-menu', routeData)
+    },
+    // 创建导航外联样式
+    createNavStyle() {
+      const styleTag = document.createElement('style');
+      styleTag.setAttribute('id', 'customNavStyle');
+      styleTag.setAttribute("type", "text/css");   
+      // 如果style样式存在就移除重新生成
+      const heads = document.getElementsByTagName('head');
+      const styleNode = document.getElementById('customNavStyle');
+      if (styleNode) {
+          heads.length > 0 ? heads[0].removeChild(styleNode) : docuemnt.documentElement.appendChild(styleNode);
+      }
+      styleTag.styleSheet ?
+        styleTag.styleSheet.cssText = this.setCssStyleString()
+        : styleTag.innerText = this.setCssStyleString();
+      heads.length > 0 ? heads[0].appendChild(styleTag) : docuemnt.documentElement.appendChild(styleTag);
+    },
+    setCssStyleString() {
+      return `
+        .jc-first-subMenu > [class*=menu], .jc-first-subMenu > [class*=submenu] > .el-submenu__title {
+          background-color: ${this.navBackgroundColor} !important;
+        }
+
+        .jc-menu-wrap .is-active{
+          background-color: ${this.activeBackgroundColor} !important;
+          color: ${this.fontColor} !important;
+        }
+        .jc-menu-wrap .el-menu-item, .jc-menu-wrap .el-submenu__title {
+          height: 50px !important;
+          line-height: 50px !important;
+        }
+        .jc-menu-wrap  .el-menu-item:hover, .jc-menu-wrap .el-submenu__title:hover {
+          background-color: ${this.activeBackgroundColor} !important;
+          color: ${this.fontColor} !important;
+        }
+        .jc-menu-wrap .el-menu-item i, .jc-menu-wrap .el-submenu__title i {
+          color: ${this.fontColor} !important;
+        }
+        .el-menu--horizontal .is-active .el-submenu__title {
+          border-bottom: 3px solid #1890FF !important;
+          color: ${this.fontColor} !important;
+        }
+        .el-menu--horizontal .el-menu .el-menu-item.is-active, .el-menu--horizontal .el-menu .el-submenu.is-active>.el-submenu__title {
+          color: ${this.fontColor} !important; 
+          background-color: ${this.activeBackgroundColor} !important;
+        }
+        .jc-subMenu-box .el-submenu__title i,.jc-subMenu-box .el-menu-item i {
+          color: ${this.fontColor} !important;
+        }
+      `;
+    }
   }
 }
 </script>
 
 <style>
 .jc-vervicle-menu:not(.el-menu--collapse) {
-  width: 220px;
-  height: 100%;
+  width: 100%;
   overflow: hidden;
   user-select: none;
 }
-.jc-menu-theme .el-menu-item .is-active {
-  background-color: red !important;
-}
-.jc-menu-theme {
-background-color: #001529 !important;
-}
-.jc-menu-theme, .jc-menu-theme > [class*=menu] {
-  background-color: #001529 !important;
-}
-
-.jc-menu-wrap .is-active{
-  background-color: #2D8CF0 !important;
-  color: #fff !important;
-}
-.jc-menu-wrap .el-menu-item, .jc-menu-wrap .el-submenu__title {
-  height: 50px !important;
-  line-height: 50px !important;
-}
-.jc-menu-wrap  .el-menu-item:hover, .jc-menu-wrap .el-submenu__title:hover {
-  background-color: #2D8CF0 !important;
-  color: #fff !important;
-}
-.jc-menu-wrap .el-menu-item i, .jc-menu-wrap .el-submenu__title i {
-  color: #ffffff !important;
-}
-.el-menu--horizontal .is-active .el-submenu__title {
-  border-bottom: 3px solid #1890FF !important;
-  color: #fff !important;
-}
-.el-menu--horizontal .el-menu .el-menu-item.is-active, .el-menu--horizontal .el-menu .el-submenu.is-active>.el-submenu__title {
- color: #fff !important; 
- background-color: #2D8CF0 !important;
-}
-.el-submenu__title i {
-  color: #fff !important;
+.jc-vervicle-menu:not(.el-menu--collapse):hover {
+  overflow: auto;
 }
 </style>

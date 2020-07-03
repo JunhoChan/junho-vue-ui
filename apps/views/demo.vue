@@ -21,6 +21,7 @@
       :mode="mode"
       :nav-data="navData"
       :collapse="isCollapse"
+      @click-menu="handleClcikMenu"
     />
      <jc-nav-menu
       style="margin-top:20px"
@@ -28,20 +29,40 @@
       :nav-data="navData"
       :collapse="isCollapse"
     />
+    <el-button @click="handleAdd">新增</el-button>
+    <jc-tab-list
+      ref="tabList"
+      :tabData.sync="tabData"
+      :tabProp="tabProp"
+      style="margin-top: 20px"
+    />
   </div>
 </template>
-
+  
 <script>
 export default {
   name: 'app',
   
   data() {
     return {
+      tabProp: {
+        id: 'id',
+        label: 'name'
+      },
+      tabData: [
+       {
+          id: '1' + new Date(),
+          name: '首页',
+          icon: 'el-icon-location',
+          path: '/home'
+       }
+      ],
       funcIndex: 0,
       navData: [
         { 
           label: '首页',
           path: 'el-icon-location',
+          icon: 'el-icon-location',
           children:  []
         },
         { 
@@ -72,7 +93,7 @@ export default {
         }
       ],
       mode: 'vertical', // horizontal / vertical
-      isCollapse: false,
+      isCollapse: true,
       imgDatas: [
         '@/assets/1.jpg',
         '@/assets/2.jpg',
@@ -89,9 +110,20 @@ export default {
   },
 
   methods: {
+    handleClcikMenu(router) {
+      console.log(router)
+    },
     // 滚动到底部
     handleScrollBottom() {
       console.log('滚动到底部')
+    },
+    handleAdd() {
+      this.$refs['tabList'].openTab({
+        id: '1' + new Date(),
+        name: '首页',
+        icon: 'el-icon-location',
+        path: '/home'
+      })
     }
   }
 }
