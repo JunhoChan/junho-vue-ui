@@ -1,8 +1,3 @@
-<template>
-    <div class="jc-waterfall-wrap" ref="waterfall" />
-</template>
-
-
 <script>
 import './index.css'
 export default {
@@ -29,8 +24,7 @@ export default {
 
   data() {
     return {
-      colHeights: [], // 宽度
-      imageList: [] // 存储图片列表的位置信息
+      colHeights: [] // 记录上一行列图片的所在的高度
     }
   },
   
@@ -58,9 +52,9 @@ export default {
       this.imgDatas.forEach((item, index) => {
         const img = new Image();
         const wrapperImg = document.createElement('div')
-        wrapperImg.style.width = this.width + 'px';
+        wrapperImg.style.width = this.width + 'px'
         wrapperImg.className = "jc-waterfall-cover"
-        img.src = require(`@/assets/load${index + 1}.jpg`);
+        img.src = item
         img.className = 'cover-image'
         img.onload = () => {
           wrapperImg.appendChild(img)
@@ -86,6 +80,17 @@ export default {
           console.log(e)
         }
     }
+  },
+
+  render(createElement) {
+    return createElement('div',
+      {
+        attrs: {
+          class: 'jc-waterfall-wrap'
+        },
+        ref: 'waterfall'
+      }
+    )
   }
 }
 </script>

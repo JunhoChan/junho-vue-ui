@@ -1,11 +1,11 @@
 <template>
   <div>
     <jc-porttable-video />
-    <!-- <jc-waterfall
+    <jc-waterfall
        style="margin-top:20px"
       :width="400"
       :img-datas="imgDatas"
-    /> -->
+    />
     <!-- <jc-infinite-scroll
       :height="500" @scroll-bottom="handleScrollBottom" :delay="0">
       <div style="height:20vh">22222</div>
@@ -95,16 +95,16 @@ export default {
       mode: 'vertical', // horizontal / vertical
       isCollapse: true,
       imgDatas: [
-        '@/assets/1.jpg',
-        '@/assets/2.jpg',
-        '@/assets/3.jpg',
-        '@/assets/4.jpg',
-        '@/assets/5.jpg',
-        '@/assets/6.jpg',
-        '@/assets/7.jpg',
-        '@/assets/8.jpg',
-        '@/assets/9.jpg',
-        '@/assets/10.jpg'
+        require(`@/assets/load1.jpg`),
+        require(`@/assets/load2.jpg`),
+        require(`@/assets/load3.jpg`),
+        require(`@/assets/load4.jpg`),
+        require(`@/assets/load5.jpg`),
+        require(`@/assets/load6.jpg`),
+        require(`@/assets/load7.jpg`),
+        require(`@/assets/load8.jpg`),
+        require(`@/assets/load9.jpg`),
+        require(`@/assets/load10.jpg`)
       ]
     }
   },

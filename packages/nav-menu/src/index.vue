@@ -26,11 +26,12 @@ export default {
  },
 
  props:  {
-   navData: { // 导航数据
+   navData: {
      type: Array,
      default: () => []
    },
-   navProp: { // 定义导航参数的配置值
+   //Define configuration values ​​for navigation
+   navProp: {
      type: Object,
      default() {
        return {
@@ -65,19 +66,21 @@ export default {
   },
 
   mounted() {
-    this.createNavStyle()
+    this.initNavStyle()
   },
 
   methods: {
     /**
-     * @description 菜单被点击
+     * @description click nav menu
      * @param {Object} routeData
      */
     hancleMenuItemClick(routeData) {
       this.$emit('click-menu', routeData)
     },
-    // 创建导航外联样式
-    createNavStyle() {
+    /**
+     * @description init nav style
+     */
+    initNavStyle() {
       const styleTag = document.createElement('style');
       styleTag.setAttribute('id', 'customNavStyle');
       styleTag.setAttribute("type", "text/css");   
