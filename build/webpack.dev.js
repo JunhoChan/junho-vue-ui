@@ -13,10 +13,18 @@ module.exports =  {
           filename: 'index.html',
       },
   },
+  css: {
+    loaderOptions: {
+      sass: {
+        prependData: '@import "~@app/styles/common/variable.scss";'
+      }
+    }
+  },
   configureWebpack: {
       resolve: {
           extensions: ['.js', '.vue', '.json'],
           alias: {
+              '@app': resolve('./../apps'),
               '@': resolve('./../src'),
               '@packages': resolve('./../packages'),
           }

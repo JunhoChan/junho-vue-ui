@@ -46,6 +46,16 @@ export default {
       this.loadImage();
     },
     /**
+     * @description 找到当前列最大的高度并且返回
+     */
+    findMaxHeightAndReturn() {
+      let maxHeight = 0;
+      this.colHeights.forEach(item => {
+        if (maxHeight < item * 1) maxHeight = item * 1;
+      });
+      return maxHeight;
+    },
+    /**
      * @description 加载图片
      */
     loadImage() {
@@ -60,11 +70,12 @@ export default {
           wrapperImg.appendChild(img)
           this.$refs['waterfall'].appendChild(wrapperImg)
           this.setImageStyle(img)
+          this.$refs['waterfall'].style.height = this.findMaxHeightAndReturn() + 'px'
         }
       })
     },
     /**
-     * @description 设置图片央视
+     * @description 设置图片样式
      * @param {Element} element
      */
     setImageStyle(element) {

@@ -17,7 +17,7 @@
       <div style="height:20vh">22222</div>
       <div style="height:20vh">22222</div>
     </jc-infinite-scroll> -->
-    <jc-nav-menu
+    <!-- <jc-nav-menu
       :mode="mode"
       :nav-data="navData"
       :collapse="isCollapse"
@@ -28,14 +28,7 @@
       mode="horizontal"
       :nav-data="navData"
       :collapse="isCollapse"
-    />
-    <el-button @click="handleAdd">新增</el-button>
-    <jc-tab-list
-      ref="tabList"
-      :tabData.sync="tabData"
-      :tabProp="tabProp"
-      style="margin-top: 20px"
-    />
+    /> -->
   </div>
 </template>
   
