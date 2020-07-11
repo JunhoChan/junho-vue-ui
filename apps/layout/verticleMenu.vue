@@ -85,10 +85,5 @@ export default {
 <style>
 .jc-menu-wrap {
   height: calc(100% - 67px);
-  overflow: auto;
-  background-color: #001529 !important;
-}
-.jc-vervicle-menu {
-  border-right: 1px solid #001529;
 }
 </style>

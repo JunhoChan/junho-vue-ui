@@ -176,6 +176,10 @@ export default {
      * 移除tab
      */
     handleRmoveTab(index) {
+      if (this.activeIndex >= index && this.activeIndex > 0) {
+        this.activeIndex -= 1
+        this.$emit('click-tab', this.tabData[this.activeIndex], this.activeIndex)
+      }
       this.tabData.splice(index, 1)
     },
     /**

@@ -10,7 +10,8 @@ import {
   tabList,
   porttableVideo,
   waterfall
-} from './../lib/index.js';
+} from './../packages';
+// './../lib/index.js'
 
 import './styles/index.scss'
 import 'element-ui/lib/theme-chalk/index.css';

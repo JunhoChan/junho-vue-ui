@@ -97,6 +97,11 @@ export default {
     },
     setCssStyleString() {
       return `
+        .jc-menu-wrap {
+          background-color: ${this.navBackgroundColor} !important;
+          border-right: 1px solid ${this.navBackgroundColor};
+          overflow: auto;
+        }
         .jc-first-subMenu > [class*=menu], .jc-first-subMenu > [class*=submenu] > .el-submenu__title {
           background-color: ${this.navBackgroundColor} !important;
         }
