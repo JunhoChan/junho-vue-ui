@@ -180,6 +180,8 @@ export default {
         this.activeIndex -= 1
         this.$emit('click-tab', this.tabData[this.activeIndex], this.activeIndex)
       }
+      this.getCurrentElementAndOffset()
+      this.judgeAllowRightTurn()
       this.tabData.splice(index, 1)
     },
     /**
@@ -213,6 +215,8 @@ export default {
         default: 
           break;
       }
+      this.getCurrentElementAndOffset()
+      this.judgeAllowRightTurn()
       this.$emit('trigger-event', eventName, tabData)
     },
     // 处理页面尺寸变化
