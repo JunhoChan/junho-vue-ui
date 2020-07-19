@@ -32,7 +32,8 @@
               @mouseleave.native="handleMouseLeave">
                 {{tab[tabProp['label']]}}
                 <em
-                  v-if="(activeIndex === index || hoverIndex === index )&& index !== 0"
+                  v-show="(activeIndex === index || hoverIndex === index )&& index !== 0"
+                  :style="`width:${(activeIndex === index || hoverIndex === index )&&index !== 0 ?'14': '0'}px;transition: .3s all;`"
                   @mouseenter.stop="isHoverIcon = true"
                   @mouseleave.stop="isHoverIcon = false"
                   :class="isHoverIcon && hoverIndex === index ? `el-icon-error` : 'el-icon-close'"
@@ -212,7 +213,8 @@ export default {
           tabData = this.tabData.filter((item, index) => index === 0)
           this.activeIndex = 0;
           break
-        default: 
+        default:
+          tabData = this.tabData;
           break;
       }
       this.getCurrentElementAndOffset()
@@ -259,6 +261,7 @@ export default {
   z-index: 100;
   width: 30px;
   height: 55px;
+  padding-left: 5px;
   position: absolute;
   top: 0px;
   color: #666;
