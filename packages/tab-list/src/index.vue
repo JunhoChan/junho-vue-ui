@@ -18,16 +18,16 @@
           title="下一页"
           @click="clickTabPage('next')" />
       </span>
-        <div
+      <div
           ref="tabList"
           class="jc-tab-box_inner"
           :style="`transform: translateX(${currentOffsetX}px)`">
             <el-button
+              ref="tabButton"
               v-for="(tab, index) in tabData"
               :key="tab[tabProp['label']] + index"
               :class="[{'is-active': index === activeIndex}]"
               @click="clickCurrentTab(tab, index)"
-              ref="tabButton"
               @mouseenter.native="handleMouseEnter(index)"
               @mouseleave.native="handleMouseLeave">
                 {{tab[tabProp['label']]}}
@@ -57,6 +57,10 @@ export default {
   },
 
   props: {
+    defaultActive: {
+      type: Number,
+      default: 0
+    },
     tabProp: {
       type: Object,
       default() {
@@ -84,6 +88,7 @@ export default {
   },
 
   mounted() {
+    this.activeIndex = this.defaultActive;
     this.handleResize(true)
   },
 
@@ -97,8 +102,8 @@ export default {
      */
     judgeAllowRightTurn() {
       this.$nextTick(() => {
-        const totalWidth = this.$refs['tabList'].scrollWidth
-        const clientWidth = this.$refs['tabList'].offsetWidth
+        const totalWidth = this.$refs['tabList'] && this.$refs['tabList'].scrollWidth
+        const clientWidth = this.$refs['tabList'] && this.$refs['tabList'].offsetWidth
         const currentOffsetWidth = (clientWidth + Math.abs(this.currentOffsetX))
         this.isAllowRightTurn = currentOffsetWidth < totalWidth
           && totalWidth !== clientWidth
@@ -107,7 +112,7 @@ export default {
     clickTabPage(toggleStatus, distance = 100) {
       if (toggleStatus === 'next') {
         this.currentOffsetX -= distance;
-        const currentWidth = this.$refs['tabList'].offsetWidth + Math.abs(this.currentOffsetX);
+        const currentWidth = this.$refs['tabList'] && this.$refs['tabList'].offsetWidth + Math.abs(this.currentOffsetX);
       } else {
         const x = Math.abs(this.currentOffsetX)
         this.currentOffsetX += x < distance ? x : distance;
@@ -157,9 +162,9 @@ export default {
         const tabButtons = this.$refs['tabButton'];
         let currentWidth = 0;
         for(let i = 0; i <= this.activeIndex; i++) {
-          currentWidth += tabButtons[i].$el.offsetWidth + 10;
+          currentWidth += tabButtons[i] && tabButtons[i].$el && tabButtons[i].$el.offsetWidth + 10;
         }
-        const diffWidth = this.$refs['tabList'].clientWidth - currentWidth
+        const diffWidth = this.$refs['tabList'] && this.$refs['tabList'].clientWidth - currentWidth
         this.currentOffsetX = diffWidth >= 0 ? 0 : (diffWidth - 50)
       })
     },
@@ -177,13 +182,15 @@ export default {
      * 移除tab
      */
     handleRmoveTab(index) {
-      if (this.activeIndex >= index && this.activeIndex > 0) {
+      if (this.activeIndex === index) {
         this.activeIndex -= 1
         this.$emit('click-tab', this.tabData[this.activeIndex], this.activeIndex)
+      } else if (this.activeIndex > index) {
+        this.activeIndex -= 1
       }
+      this.tabData.splice(index, 1)
       this.getCurrentElementAndOffset()
       this.judgeAllowRightTurn()
-      this.tabData.splice(index, 1)
     },
     /**
      * @description 点击触发事件

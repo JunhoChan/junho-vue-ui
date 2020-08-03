@@ -15,8 +15,7 @@
       navBackgroundColor="#001529"
       fontColor="#fff"
       activeBackgroundColor="#2D8CF0"
-      @click-menu="handleClcikMenu"
-    />
+      @click-menu="handleClcikMenu" />
   </div>
 </template>
 

@@ -3,6 +3,7 @@
     <jc-tab-list
       ref="tabList"
       :tabProp="tabProp"
+      :defaultActive="1"
       :tabData.sync="tabData"
       @click-tab="clickTab"
       @trigger-event="handleTriggerEvnet" />
